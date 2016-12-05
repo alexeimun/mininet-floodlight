@@ -1,0 +1,16 @@
+# ~/.tmuxinator/main.yml
+
+name: main
+root: ~/
+
+windows:
+  - mininet:
+      layout: main-vertical
+      panes:
+        - sudo mn --controller=remote,port=6653 --switch ovsk,protocols=OpenFlow13
+        -
+
+  - floodlight:
+      layout: main-vertical
+      panes:
+        - fl
