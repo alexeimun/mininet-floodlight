@@ -12,8 +12,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision :shell, inline: <<-SHELL
         apt-add-repository ppa:colin-king/powermanagement
         apt-get -y update
-        apt-get -y install git
-        sudo apt-get -y install build-essential openjdk-7-jdk ant maven python-dev eclipse, powerstat
+        sudo apt-get -y install build-essential openjdk-7-jdk ant maven python-dev eclipse powerstat unzip git
         gem install tmuxinator
     SHELL
     
