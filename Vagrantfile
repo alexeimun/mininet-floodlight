@@ -10,13 +10,14 @@ Vagrant.configure("2") do |config|
     config.ssh.forward_x11 = true
     ######################## START PROVISION ######################
     config.vm.provision :shell, inline: <<-SHELL
-        apt-add-repository ppa:colin-king/powermanagement
-        apt-get -y update
-        sudo apt-get -y install build-essential openjdk-7-jdk ant maven python-dev eclipse powerstat unzip git
-        gem install tmuxinator
+        echo "Step 1). Running sudo apt-get update..." && apt-get -qq -y update
+        echo "Step 2). Getting openjsdk-7-jdk and other java tools..." && apt-get -qq -y openjdk-7-jdk ant maven python-dev eclipse
+        echo "Step 3). Installing other neccessary tools..." && apt-get -qq -y install build-essential powerstat unzip git
+        gem install -q tmuxinator
     SHELL
     
     config.vm.provision "shell", privileged: false, inline: <<-SHELL
+        echo "Step 4). Setting up the environment..."
         mkdir ~/.tmuxinator
         echo 'alias fl="cd ~/floodlight-1.2 && ant && java -jar target/floodlight.jar"' >> ~/.bashrc
         echo "export EDITOR='vim'" >> ~/.bashrc
@@ -25,12 +26,15 @@ Vagrant.configure("2") do |config|
         echo JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 >> ~/.bashrc
         echo "tmuxinator start main" >> ~/.bashrc
         cd ~/
-        git clone git://github.com/mininet/mininet
+        echo "Step 5). Downloading mininet please wait..." && git clone --quiet git://github.com/mininet/mininet
         cd mininet
         git tag && git checkout -b 2.2.1 2.2.1
-        ./util/install.sh -a
+        chmod +x ./util/install.sh && ./util/install.sh -a
         cd ~/ && echo "Downloading floodlight please wait..." && wget -q https://codeload.github.com/floodlight/floodlight/zip/v1.2 -O pfl.zip
-        unzip pfl.zip
+        unzip -qq pfl.zip
+        echo "Step 6). Finishing installation..."
+        echo "Step 7). Run vagrant ssh command to enter to the machine!"
+        echo "Enjoy!"
     SHELL
     config.vm.provision "file", source: "main.yml", destination: ".tmuxinator/main.yml"
     ###################### END PROVISION ####################
