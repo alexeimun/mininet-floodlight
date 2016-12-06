@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     ######################## START PROVISION ######################
     config.vm.provision :shell, inline: <<-SHELL
         echo "Step 1). Running sudo apt-get update..." && apt-get -qq -y update
-        echo "Step 2). Getting openjsdk-7-jdk and other java tools..." && apt-get -qq -y openjdk-7-jdk ant maven python-dev eclipse
+        echo "Step 2). Getting openjsdk-7-jdk and other java tools..." && apt-get -qq -y install openjdk-7-jdk ant maven python-dev eclipse
         echo "Step 3). Installing other neccessary tools..." && apt-get -qq -y install build-essential powerstat unzip git
         gem install -q tmuxinator
     SHELL
