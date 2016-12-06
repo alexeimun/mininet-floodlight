@@ -10,9 +10,10 @@ Vagrant.configure("2") do |config|
     config.ssh.forward_x11 = true
     ######################## START PROVISION ######################
     config.vm.provision :shell, inline: <<-SHELL
+        apt-add-repository ppa:colin-king/powermanagement
         apt-get -y update
         apt-get -y install git
-        sudo apt-get -y install build-essential openjdk-7-jdk ant maven python-dev eclipse
+        sudo apt-get -y install build-essential openjdk-7-jdk ant maven python-dev eclipse, powerstat
         gem install tmuxinator
     SHELL
     
@@ -40,7 +41,6 @@ Vagrant.configure("2") do |config|
     config.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.cpus = 2
-      #vb.gui=true
       vb.name="mininet"
     end
 end
