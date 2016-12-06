@@ -27,11 +27,9 @@ Vagrant.configure("2") do |config|
         cd ~/
         git clone git://github.com/mininet/mininet
         cd mininet
-        git tag
-        git checkout -b 2.2.1 2.2.1
+        git tag && git checkout -b 2.2.1 2.2.1
         ./util/install.sh -a
-        cd ~/
-        wget https://codeload.github.com/floodlight/floodlight/zip/v1.2 -O pfl.zip
+        cd ~/ && echo "Downloading floodlight please wait..." && wget -q https://codeload.github.com/floodlight/floodlight/zip/v1.2 -O pfl.zip
         unzip pfl.zip
     SHELL
     config.vm.provision "file", source: "main.yml", destination: ".tmuxinator/main.yml"
