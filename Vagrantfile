@@ -31,9 +31,9 @@ Vagrant.configure("2") do |config|
         git tag && git checkout -b 2.2.1 2.2.1
         chmod +x ./util/install.sh && ./util/install.sh -a
         cd ~/ && echo "Downloading floodlight please wait..." && wget -q https://codeload.github.com/floodlight/floodlight/zip/v1.2 -O pfl.zip
-        unzip -qq pfl.zip
-        echo "Step 6). Finishing installation..."
-        echo "Step 7). Run vagrant ssh command to enter to the machine!"
+        echo "Step 6). Unzipping floodlight..." && unzip -qq pfl.zip
+        echo "Step 7). Finishing installation..."
+        echo "Step 8). Run vagrant ssh command to enter to the machine!"
         echo "Enjoy!"
     SHELL
     config.vm.provision "file", source: "main.yml", destination: ".tmuxinator/main.yml"
