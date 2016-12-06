@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
     ######################## START PROVISION ######################
     config.vm.provision :shell, inline: <<-SHELL
         echo "Step 1). Running sudo apt-get update..." && apt-get -qq -y update
-        echo "Step 2). Getting openjsdk-7-jdk and other java tools..." && apt-get -qq -y install openjdk-7-jdk ant maven python-dev eclipse
+        echo "Step 2). Installing openjsdk-7-jdk and other java tools..." && apt-get -qq -y install openjdk-7-jdk ant maven python-dev eclipse
         echo "Step 3). Installing other neccessary tools..." && apt-get -qq -y install build-essential powerstat unzip git
         gem install -q tmuxinator
     SHELL
@@ -25,10 +25,8 @@ Vagrant.configure("2") do |config|
         source /etc/default/locale
         echo JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 >> ~/.bashrc
         echo "tmuxinator start main" >> ~/.bashrc
-        cd ~/
-        echo "Step 5). Downloading mininet please wait..." && git clone --quiet git://github.com/mininet/mininet
-        cd mininet
-        git tag && git checkout -b 2.2.1 2.2.1
+        echo "Step 5). Downloading mininet please wait..." && cd ~/ && git clone --quiet git://github.com/mininet/mininet
+        cd mininet && git tag && git checkout -b 2.2.1 2.2.1
         chmod +x ./util/install.sh && ./util/install.sh -a
         cd ~/ && echo "Downloading floodlight please wait..." && wget -q https://codeload.github.com/floodlight/floodlight/zip/v1.2 -O pfl.zip
         echo "Step 6). Unzipping floodlight..." && unzip -qq pfl.zip
